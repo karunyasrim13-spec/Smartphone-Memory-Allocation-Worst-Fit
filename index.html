@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Worst Fit: Smartphone Memory Allocation</title>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700;800&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="wrap">
+  <div class="top">
+    <h1>Worst Fit on<br>your phone’s RAM</h1>
+    <button class="theme" id="theme" type="button">Toggle theme</button>
+  </div>
+  <p class="lead">When you open an app, the phone must find a free block of RAM big enough. <b>Worst Fit</b> always picks the <b>largest</b> free block, then splits off what’s left. Launch apps and watch which hole gets chosen.</p>
+
+  <div class="grid">
+    <div class="phone">
+      <div class="phone-top"><span>RAM · 8 GB</span><span id="used">used</span></div>
+      <div id="ram" aria-live="polite"></div>
+    </div>
+
+    <div>
+      <div class="panel">
+        <h2>Open an app</h2>
+        <div class="apps" id="apps"></div>
+        <div class="row">
+          <input id="cn" placeholder="App name" aria-label="App name" maxlength="14">
+          <input id="cs" type="number" min="16" max="8192" placeholder="Size (MB)" aria-label="Size in MB">
+          <button class="btn" id="add" type="button">Open app</button>
+          <button class="btn alt" id="reset" type="button">Reset</button>
+        </div>
+        <div class="stats">
+          <div class="stat"><b id="sFree">0</b><span>MB free</span></div>
+          <div class="stat"><b id="sBig">0</b><span>MB largest hole</span></div>
+          <div class="stat"><b id="sHoles">0</b><span>free holes</span></div>
+        </div>
+      </div>
+      <div class="panel" style="margin-top:14px">
+        <h2>What happened</h2>
+        <ul id="log"></ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="how">
+    <div class="panel"><h2>1. Scan every hole</h2><p>The memory manager looks at all free blocks, not just the first one that fits.</p></div>
+    <div class="panel"><h2>2. Take the biggest</h2><p>The largest hole wins. The app gets the start of it, and the rest stays free as a new, smaller hole.</p></div>
+    <div class="panel"><h2>3. Closing merges holes</h2><p>When an app closes, its block turns free and joins any free neighbours into one bigger hole.</p></div>
+    <div class="panel"><h2>Why it can fail</h2><p>Worst Fit keeps leaving medium-sized leftovers. Eventually a big app may not fit even when total free RAM is enough. That is external fragmentation.</p></div>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
